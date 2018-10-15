@@ -1,0 +1,52 @@
+import java.util.Arrays;
+import java.util.Random;
+
+public class quickSort {
+
+	public static void main(String[] args) {
+		int[] example = generateArray(20);
+		System.out.println(Arrays.toString(example));
+		quicksort(example, 0, example.length - 1);
+		System.out.println(Arrays.toString(example));
+	}
+
+	private static int[] generateArray(int i) {
+		Random random = new Random();
+		int[] res = new int[i];
+		for (int j = 0; j < i; j++) {
+			res[j] = random.nextInt(100);
+		}
+		return res;
+	}
+
+	private static void quicksort(int[] array, int start, int end) {
+		if (end - start <= 0) {
+			return;
+		}
+		int lp = start, rp = end, pivot = end;
+		while (lp < pivot || pivot < rp) {
+			if (pivot < rp) {
+				if (array[pivot] > array[rp]) {
+					int tmp = array[pivot];
+					array[pivot] = array[rp];
+					array[rp] = tmp;
+					pivot = rp;
+				} else {
+					rp--;
+				}
+			} else {
+				if (array[pivot] < array[lp]) {
+					int tmp = array[pivot];
+					array[pivot] = array[lp];
+					array[lp] = tmp;
+					pivot = lp;
+				} else {
+					lp++;
+				}
+			}
+		}
+		quicksort(array, start, pivot - 1);
+		quicksort(array, pivot + 1, end);
+	}
+
+}
