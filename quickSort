@@ -4,7 +4,7 @@ import java.util.Random;
 public class quickSort {
 
 	public static void main(String[] args) {
-		int[] example = generateArray(20);
+		int[] example = generateArray(10000);
 		System.out.println(Arrays.toString(example));
 		quicksort(example, 0, example.length - 1);
 		System.out.println(Arrays.toString(example));
@@ -14,7 +14,7 @@ public class quickSort {
 		Random random = new Random();
 		int[] res = new int[i];
 		for (int j = 0; j < i; j++) {
-			res[j] = random.nextInt(100);
+			res[j] = random.nextInt(10000);
 		}
 		return res;
 	}
@@ -23,7 +23,7 @@ public class quickSort {
 		if (end - start <= 0) {
 			return;
 		}
-		int lp = start, rp = end, pivot = end;
+		int lp = start, rp = end, pivot = (start+end)/2;
 		while (lp < pivot || pivot < rp) {
 			if (pivot < rp) {
 				if (array[pivot] > array[rp]) {
