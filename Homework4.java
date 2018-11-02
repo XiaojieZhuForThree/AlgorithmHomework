@@ -24,14 +24,16 @@ import java.util.*;
 //submit the screen shot of each execution
 
 public class Homework4 {
-	private static void printMatrix(int[][] matrix) {		// a function used to print the adjacency matrix of the graph
+	private static void printMatrix(int[][] matrix) {
+		// a function used to print the adjacency matrix of the graph
 		for (int[] i : matrix) {
 			System.out.println(Arrays.toString(i));
 		}
 		System.out.println();
 	}
 
-	private static void dfs(int[][] matrix, char[] vertices, int index, boolean[] alreadyVisited) {		// a function used to do dfs of the graph
+	private static void dfs(int[][] matrix, char[] vertices, int index, boolean[] alreadyVisited) {
+		// a function used to do dfs of the graph
 		System.out.print(vertices[index]);
 		alreadyVisited[index] = true;
 		for (int i = 0; i < matrix[index].length; i++) {
@@ -42,7 +44,8 @@ public class Homework4 {
 		}
 	}
 
-	private static void bfs(int[][] matrix, char[] vertices, int index) {	// a function used to do bfs of the graph
+	private static void bfs(int[][] matrix, char[] vertices, int index) {
+		// a function used to do bfs of the graph
 		Queue<Integer> queue = new LinkedList<>();
 		boolean[] alreadyVisited = new boolean[matrix.length];
 		System.out.print(vertices[index]);
@@ -63,19 +66,22 @@ public class Homework4 {
 	}
 
 	public static void main(String[] args) {
-		char[] vertices = { 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J' };  // the vertices of the graph
-		int[][] matrix = { { 0, 1, 0, 0, 1, 1, 0, 0, 0, 0 }, { 1, 0, 1, 0, 0, 0, 1, 0, 0, 0 },	// the adjacency matrix of the graph
+		// the vertices of the graph
+		char[] vertices = { 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J' };
+
+		// the adjacency matrix of the graph
+		int[][] matrix = { { 0, 1, 0, 0, 1, 1, 0, 0, 0, 0 }, { 1, 0, 1, 0, 0, 0, 1, 0, 0, 0 },
 				{ 0, 1, 0, 1, 0, 0, 0, 1, 0, 0 }, { 0, 0, 1, 0, 1, 0, 0, 0, 1, 0 }, { 1, 0, 0, 1, 0, 0, 0, 0, 0, 1 },
 				{ 1, 0, 0, 0, 0, 0, 0, 1, 1, 0 }, { 0, 1, 0, 0, 0, 0, 0, 0, 1, 1 }, { 0, 0, 1, 0, 0, 1, 0, 0, 0, 1 },
 				{ 0, 0, 0, 1, 0, 1, 1, 0, 0, 0 }, { 0, 0, 0, 0, 1, 0, 1, 1, 0, 0 } };
 
 		System.out.println("The adjacency matrix of the graph is:");
-		printMatrix(matrix);			// print the adjacency matrix
+		printMatrix(matrix); // print the adjacency matrix
 
-		System.out.println("The start vertex of dfs is: " + vertices[0]);			// do dfs start with the vertex 'A'
+		System.out.println("The start vertex of dfs is: " + vertices[0]); // do dfs start with the vertex 'A'
 		dfs(matrix, vertices, 0, new boolean[matrix.length]);
 
-		System.out.println("\n\n"+"The start vertex of bfs is: " + vertices[0]);		// do bfs start with the vertex 'A'
+		System.out.println("\n\n" + "The start vertex of bfs is: " + vertices[0]); // do bfs start with the vertex 'A'
 		bfs(matrix, vertices, 0);
 	}
 
