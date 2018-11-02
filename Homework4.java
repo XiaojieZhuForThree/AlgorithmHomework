@@ -1,4 +1,4 @@
-import java.util.Arrays;
+import java.util.*;
 
 //Create an undirected graph of at least 10 vertices and 15 edges.
 //
@@ -29,11 +29,26 @@ public class Homework4 {
 			System.out.println(Arrays.toString(i));
 		}
 	}
+	private static void dfs(int[][] matrix, char[] vertices, int index, Set<Character> alreadyVisited) {
+		if (!alreadyVisited.contains(vertices[index])) {
+			System.out.print(vertices[index]);
+			alreadyVisited.add(vertices[index]);
+			for (int i = index+1; i < matrix[index].length; i++) {
+				if (matrix[index][i] == 1) {
+					dfs(matrix, vertices, i, alreadyVisited);
+				}
+			}
+		}
+	}
 	public static void main(String[] args) {
+		char[] vertices = {'A','B','C','D','E','F','G','H','I','J'};
 		int[][] graph = {{0,1,0,0,1,1,0,0,0,0},{1,0,1,0,0,0,1,0,0,0},{0,1,0,1,0,0,0,1,0,0},{0,0,1,0,1,0,0,0,1,0},{1,0,0,1,0,0,0,0,0,1},
 		{1,0,0,0,0,0,0,1,1,0},{0,1,0,0,0,0,0,0,1,1},{0,0,1,0,0,1,0,0,0,1},{0,0,0,1,0,1,1,0,0,0},{0,0,0,0,1,0,1,1,0,0}};
 		
 		printMatrix(graph);
+		
+		System.out.println('\n'+"The start vertex of dfs is:"+ vertices[0]);
+		dfs(graph, vertices, 0, new HashSet<>());
 	}
 
 }
