@@ -27,7 +27,7 @@ public class Homework4 {
 	private static void printMatrix(int[][] matrix) {
 		// a function used to print the adjacency matrix of the graph
 		for (int[] i : matrix) {
-			System.out.println(Arrays.toString(i));
+			System.out.println(Arrays.toString(i).substring(1,Arrays.toString(i).length()-1));
 		}
 		System.out.println();
 	}
