@@ -78,10 +78,12 @@ public class Homework4 {
 		System.out.println("The adjacency matrix of the graph is:");
 		printMatrix(matrix); // print the adjacency matrix
 
-		System.out.println("The start vertex of dfs is: " + vertices[0]); // do dfs start with the vertex 'A'
+		System.out.println("The start vertex of DFS is: " + vertices[0]); // do dfs start with the vertex 'A'
+		System.out.println("The DFS node sequence is: ");
 		dfs(matrix, vertices, 0, new boolean[matrix.length]);
 
-		System.out.println("\n\n" + "The start vertex of bfs is: " + vertices[0]); // do bfs start with the vertex 'A'
+		System.out.println("\n\n" + "The start vertex of BFS is: " + vertices[0]); // do bfs start with the vertex 'A'
+		System.out.println("The BFS node sequence is: ");
 		bfs(matrix, vertices, 0);
 	}
 
