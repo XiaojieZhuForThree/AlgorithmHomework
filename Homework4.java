@@ -45,7 +45,7 @@ public class Homework4 {
 	}
 
 	private static void bfs(int[][] matrix, char[] vertices, int index) {
-		// a function used to do bfs of the graph
+		// a function used to do bfs of the graph.
 		Queue<Integer> queue = new LinkedList<>();
 		boolean[] alreadyVisited = new boolean[matrix.length];
 		System.out.print(vertices[index]);
@@ -88,3 +88,4 @@ public class Homework4 {
 	}
 
 }
+
