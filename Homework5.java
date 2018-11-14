@@ -26,30 +26,29 @@ public class Homework5 {
 	}
 
 	private static void bfa(int[][] matrix, char[] vertices, int start) {
-		int[] weights = new int[matrix.length];
-		int[] prevs = new int[matrix.length];
-		for (int i : weights) {
-			i = Integer.MAX_VALUE;
+		int[] weights = new int[matrix.length], prevs = new int[matrix.length];
+		for (int i = 0; i < weights.length; i++) {
+			weights[i] = Integer.MAX_VALUE;
 		}
 		weights[start] = 0;
 		prevs[start] = start;
-		int times = 0;
-		while (times < matrix.length) {
+		for (int times = 0; times < matrix.length; times++) {
 			for (int i = 0; i < matrix.length; i++) {
 				for (int j = 0; j < matrix[i].length; j++) {
-					if (weights[j] > weights[i] + matrix[i][j]) {
+					if (matrix[i][j] != 0 && weights[i] != Integer.MAX_VALUE
+							&& weights[j] > weights[i] + matrix[i][j]) {
 						weights[j] = weights[i] + matrix[i][j];
 						prevs[j] = i;
 					}
 				}
 			}
-			times++;
 		}
-		for (int i = 0; i < matrix.length; i++) {
+
+		for (int i = 0; i < matrix.length - 1; i++) {
 			for (int j = 0; j < matrix[i].length; j++) {
-				if (weights[j] > weights[i] + matrix[i][j]) {
+				if (matrix[i][j] != 0 && weights[i] != Integer.MAX_VALUE && weights[j] > weights[i] + matrix[i][j]) {
 					System.out.println(
-							"a negative cycle contains in the graph, can't solve the graph with Bellman-Ford Method.");
+							"A negative cycle contains in the graph, can't solve the graph with Bellman-Ford Method.");
 					return;
 				}
 			}
@@ -57,10 +56,17 @@ public class Homework5 {
 		System.out.println("The start point vertex is: " + vertices[start]);
 		for (int i = 0; i < matrix.length; i++) {
 			if (i != start) {
-				System.out.println(
-						"The shortest path from " + vertices[start] + " to" + vertices[i] + " is: " + weights[i]);
+				StringBuilder sb = new StringBuilder();
+				sb.append(vertices[i]);
+				int j = i;
+				while (j != start) {
+					j = prevs[j];
+					sb.append(" >- " + vertices[j]);
+				}
+				System.out.print("The weight of the shortest path from " + vertices[start] + " to " + vertices[i]
+						+ " is: " + weights[i]);
+				System.out.println(", the path is : " + sb.reverse().toString());
 			}
-
 		}
 	}
 
@@ -69,13 +75,24 @@ public class Homework5 {
 		char[] vertices = { 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J' };
 
 		// the adjacency matrix of the graph
-		int[][] matrix = { { 0, 5, 0, 0, 0, -3, 0, 0, 0, 0 }, { 0, 0, 2, 0, 0, 0, 1, 0, 0, 0 },
+		int[][] matrix1 = { { 0, 5, 0, 0, 0, -3, 0, 0, 0, 0 }, { 0, 0, 2, 0, 0, 0, 1, 0, 0, 0 },
 				{ 0, 0, 0, -3, 0, 0, 0, 4, 0, 0 }, { 0, 0, 0, 0, 4, 0, 0, 0, 2, 0 }, { -2, 0, 0, 0, 0, 0, 0, 0, 0, 8 },
 				{ 0, 0, 0, 0, 0, 0, 4, 0, 0, 0 }, { 0, 0, 0, 0, 0, 0, 0, 7, 0, 0 }, { 0, 0, 0, 0, 0, 0, 0, 0, -5, 0 },
 				{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 9 }, { 0, 0, 0, 0, 0, -6, 0, 0, 0, 0 } };
+		int[][] matrix2 = { { 0, 5, 0, 0, 0, -3, 0, 0, 0, 0 }, { 0, 0, 2, 0, 0, 0, 1, 0, 0, 0 },
+				{ 0, 0, 0, -3, 0, 0, 0, 4, 0, 0 }, { 0, 0, 0, 0, 4, 0, 0, 0, 2, 0 }, { -2, 0, 0, 0, 0, 0, 0, 0, 0, 8 },
+				{ 0, 0, 0, 0, 0, 0, 4, 0, 0, 0 }, { 0, 0, 0, 0, 0, 0, 0, 7, 0, 0 }, { 0, 0, 0, 0, 0, 0, 0, 0, -5, -6 },
+				{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 9 }, { 0, 0, 0, 0, 0, -6, 0, 0, 0, 0 } };
 
 		// printMatrix(matrix);
-		bfa(matrix, vertices, 1);
+		System.out.println("1. First we test the Bellman-Ford method with a graph with negative edges but no negative circle: ");
+		System.out.println("The adjacency matrix: ");
+		printMatrix(matrix1);
+		bfa(matrix1, vertices, 0);
+		System.out.println("\n\n2. Now we test the Bellman-Ford method with a graph with negative circle: ");
+		System.out.println("The adjacency matrix: ");
+		printMatrix(matrix2);
+		bfa(matrix2, vertices, 0);
 	}
 
 }
