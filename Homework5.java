@@ -26,15 +26,20 @@ public class Homework5 {
 	}
 
 	private static void bfa(int[][] matrix, char[] vertices, int start) {
+		// the function to implement Bellman-Ford Algorithm
 		int[] weights = new int[matrix.length], prevs = new int[matrix.length];
 		for (int i = 0; i < weights.length; i++) {
 			weights[i] = Integer.MAX_VALUE;
 		}
+		// provide an array, with all value set to infinity except for the starting point, which is set to 0
 		weights[start] = 0;
 		prevs[start] = start;
-		for (int times = 0; times < matrix.length; times++) {
+		// run the loop for n-1 time, where n is the number of vertices. 
+		for (int times = 0; times < matrix.length-1; times++) {
 			for (int i = 0; i < matrix.length; i++) {
 				for (int j = 0; j < matrix[i].length; j++) {
+					// if the distance of an edge becomes smaller than the recorded value, update the value
+					// and record the previous vertex of the destination
 					if (matrix[i][j] != 0 && weights[i] != Integer.MAX_VALUE
 							&& weights[j] > weights[i] + matrix[i][j]) {
 						weights[j] = weights[i] + matrix[i][j];
@@ -43,10 +48,13 @@ public class Homework5 {
 				}
 			}
 		}
-
+		// when the program has run for n-1 times, where n is the number of vertices, run the program for 
+		// another time, if the values are still updating, it means that there is a negative circle
 		for (int i = 0; i < matrix.length - 1; i++) {
 			for (int j = 0; j < matrix[i].length; j++) {
 				if (matrix[i][j] != 0 && weights[i] != Integer.MAX_VALUE && weights[j] > weights[i] + matrix[i][j]) {
+					// if a negative circle is detected, the graph can't be solved with Bellman-Ford algorith
+					// and we need to print out the warning.
 					System.out.println(
 							"A negative cycle contains in the graph, can't solve the graph with Bellman-Ford Method.");
 					return;
@@ -54,6 +62,9 @@ public class Homework5 {
 			}
 		}
 		System.out.println("The start point vertex is: " + vertices[start]);
+		// for each destination, trace back its previous vertex until it reaches the starting point, and then 
+		// print the route for that path from the starting point to the destination, which would be the shortest
+		// path.
 		for (int i = 0; i < matrix.length; i++) {
 			if (i != start) {
 				StringBuilder sb = new StringBuilder();
@@ -84,11 +95,12 @@ public class Homework5 {
 				{ 0, 0, 0, 0, 0, 0, 4, 0, 0, 0 }, { 0, 0, 0, 0, 0, 0, 0, 7, 0, 0 }, { 0, 0, 0, 0, 0, 0, 0, 0, -5, -6 },
 				{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 9 }, { 0, 0, 0, 0, 0, -6, 0, 0, 0, 0 } };
 
-		// printMatrix(matrix);
+		// first we test the graph without negative circle
 		System.out.println("1. First we test the Bellman-Ford method with a graph with negative edges but no negative circle: ");
 		System.out.println("The adjacency matrix: ");
 		printMatrix(matrix1);
 		bfa(matrix1, vertices, 0);
+		// then we test the graph with a negative circle
 		System.out.println("\n\n2. Now we test the Bellman-Ford method with a graph with negative circle: ");
 		System.out.println("The adjacency matrix: ");
 		printMatrix(matrix2);
