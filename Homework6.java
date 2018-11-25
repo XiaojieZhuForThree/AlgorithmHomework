@@ -6,7 +6,8 @@ import java.util.Arrays;
 //
 //The words will be of letters a-zA-Z0-9 and the space character.
 //
-//Insert them into a hash table.  The hashing algorithm uses ASCII table values for each character and adds up the values. Initially the table size is 31.  The program should increase the table size and rehash.
+//Insert them into a hash table.  The hashing algorithm uses ASCII table values for each character and adds up the values. 
+//Initially the table size is 31.  The program should increase the table size and rehash.
 //
 //The collision resolution is done using quadratic probing.
 //
