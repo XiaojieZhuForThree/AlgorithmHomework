@@ -46,6 +46,7 @@ class HashTable {
 	}
 
 	void reHash() {
+		int record = collisions;
 		int nextPrime = generateNextPrime(tableSize);
 		String[] prevTable = table.clone();
 		this.table = new String[nextPrime];
@@ -56,6 +57,7 @@ class HashTable {
 				put(i, i);				
 			}
 		}
+		collisions = record;
 	}
 
 	int getHash(String n) {
@@ -103,6 +105,7 @@ public class Homework6 {
 		}
 		System.out.println(table.collisions);
 		System.out.println(Arrays.toString(table.table));		
+		System.out.println(table.tableSize);		
 	}
 
 }
