@@ -1,3 +1,5 @@
+import java.util.Arrays;
+
 //Implement Hash table.
 //
 //Pick 20 random words.  Each word must be of different lengths, maximum length 8 and minimum length 3.
@@ -17,49 +19,46 @@ class HashTable {
 	int tableSize;
 	int load;
 	String[] table;
-	boolean[] occupied;
 
-	public HashTable() {
+	HashTable() {
 		this.table = new String[31];
-		this.occupied = new boolean[31];
 		this.tableSize = 31;
 		this.load = 0;
 	}
 
-	public HashTable(int i) {
+	HashTable(int i) {
 		this.table = new String[i];
-		this.occupied = new boolean[31];
 		this.tableSize = i;
 		this.load = 0;
 	}
 
-	public void put(String key, String val) {
-		if (load*2 >= tableSize) {
-			reHash();
-		}
+	void put(String key, String val) {
 		int hashVal = getHash(key);
-		if (this.occupied[hashVal] == true) {
+		if (table[hashVal] != null) {
 			collisions++;
 			hashVal = quadratic(hashVal);
 		}
 		table[hashVal] = val;
-		occupied[hashVal] = true;
 		load++;
-	}
-	
-	public void reHash() {
-		int nextPrime = generateNextPrime(tableSize);
-		String[] prevTable = table.clone();
-		this.table = new String[nextPrime]; 
-		this.tableSize = nextPrime;
-		this.load = 0;
-		this.occupied = new boolean[nextPrime];
-		for (String i : prevTable) {
-			put(i, i);
+		if (load * 2 >= tableSize) {
+			reHash();
 		}
 	}
 
-	public int getHash(String n) {
+	void reHash() {
+		int nextPrime = generateNextPrime(tableSize);
+		String[] prevTable = table.clone();
+		this.table = new String[nextPrime];
+		this.tableSize = nextPrime;
+		this.load = 0;
+		for (String i : prevTable) {
+			if (i != null) {
+				put(i, i);				
+			}
+		}
+	}
+
+	int getHash(String n) {
 		int val = 0;
 		for (int i = 0; i < n.length(); i++) {
 			val += n.charAt(i);
@@ -67,33 +66,33 @@ class HashTable {
 		return val % tableSize;
 	}
 
-	public int quadratic(int hash) {
+	int quadratic(int hash) {
 		int i = 1, next = hash;
-		while (this.occupied[next] == true) {
-			next = (hash + i*i) % tableSize;
+		while (table[next] != null) {
+			next = (hash + i * i) % tableSize;
 			i++;
 		}
 		return next;
 	}
 
-	public int generateNextPrime(int cur) {
-		int next = cur*2;
+	int generateNextPrime(int cur) {
+		int next = cur * 2;
 		while (!isPrime(next)) {
 			next++;
 		}
 		return next;
 	}
-	
-	public boolean isPrime(int i) {
+
+	boolean isPrime(int i) {
 		for (int j = 2; j < i; j++) {
-			if (i % j == 0) return false;
+			if (i % j == 0)
+				return false;
 		}
 		return true;
 	}
 }
 
 public class Homework6 {
-
 	public static void main(String[] args) {
 		String[] words = new String[] { "tribunal", "aviator", "draft", "aroma", "draft", "costly", "700 kB", " aKp",
 				"skimpy", "Amd", "WGLpX5i", "pi34EhMJ", "hair", "castic", "running", "screen", "13Y8g", "clinic",
@@ -102,7 +101,8 @@ public class Homework6 {
 		for (String i : words) {
 			table.put(i, i);
 		}
-		
+		System.out.println(table.collisions);
+		System.out.println(Arrays.toString(table.table));		
 	}
 
 }
