@@ -13,13 +13,96 @@
 //If the table size is more than 20,000 and the words to insert are 8000, is the above hashing algorithm adequate ? why ?
 
 class HashTable {
+	int collisions;
+	int tableSize;
+	int load;
+	String[] table;
+	boolean[] occupied;
 
+	public HashTable() {
+		this.table = new String[31];
+		this.occupied = new boolean[31];
+		this.tableSize = 31;
+		this.load = 0;
+	}
+
+	public HashTable(int i) {
+		this.table = new String[i];
+		this.occupied = new boolean[31];
+		this.tableSize = i;
+		this.load = 0;
+	}
+
+	public void put(String key, String val) {
+		if (load*2 >= tableSize) {
+			reHash();
+		}
+		int hashVal = getHash(key);
+		if (this.occupied[hashVal] == true) {
+			collisions++;
+			hashVal = quadratic(hashVal);
+		}
+		table[hashVal] = val;
+		occupied[hashVal] = true;
+		load++;
+	}
+	
+	public void reHash() {
+		int nextPrime = generateNextPrime(tableSize);
+		String[] prevTable = table.clone();
+		this.table = new String[nextPrime]; 
+		this.tableSize = nextPrime;
+		this.load = 0;
+		this.occupied = new boolean[nextPrime];
+		for (String i : prevTable) {
+			put(i, i);
+		}
+	}
+
+	public int getHash(String n) {
+		int val = 0;
+		for (int i = 0; i < n.length(); i++) {
+			val += n.charAt(i);
+		}
+		return val % tableSize;
+	}
+
+	public int quadratic(int hash) {
+		int i = 1, next = hash;
+		while (this.occupied[next] == true) {
+			next = (hash + i*i) % tableSize;
+			i++;
+		}
+		return next;
+	}
+
+	public int generateNextPrime(int cur) {
+		int next = cur*2;
+		while (!isPrime(next)) {
+			next++;
+		}
+		return next;
+	}
+	
+	public boolean isPrime(int i) {
+		for (int j = 2; j < i; j++) {
+			if (i % j == 0) return false;
+		}
+		return true;
+	}
 }
 
 public class Homework6 {
 
 	public static void main(String[] args) {
-
+		String[] words = new String[] { "tribunal", "aviator", "draft", "aroma", "draft", "costly", "700 kB", " aKp",
+				"skimpy", "Amd", "WGLpX5i", "pi34EhMJ", "hair", "castic", "running", "screen", "13Y8g", "clinic",
+				"dandruff", "NOJhj8", "ninja" };
+		HashTable table = new HashTable();
+		for (String i : words) {
+			table.put(i, i);
+		}
+		
 	}
 
 }
