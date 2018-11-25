@@ -103,9 +103,7 @@ public class Homework6 {
 		for (String i : words) {
 			table.put(i, i);
 		}
-		System.out.println(table.collisions);
-		System.out.println(Arrays.toString(table.table));		
-		System.out.println(table.tableSize);		
+		System.out.println("The total number of collisions is: " + table.collisions);		
 	}
 
 }
