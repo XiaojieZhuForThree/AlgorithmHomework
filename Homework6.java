@@ -33,6 +33,9 @@ class HashTable {
 	}
 
 	void put(String key, String val) {
+		if (load * 2 >= tableSize) {
+			reHash();
+		}
 		int hashVal = getHash(key);
 		if (table[hashVal] != null) {
 			collisions++;
@@ -40,9 +43,6 @@ class HashTable {
 		}
 		table[hashVal] = val;
 		load++;
-		if (load * 2 >= tableSize) {
-			reHash();
-		}
 	}
 
 	void reHash() {
