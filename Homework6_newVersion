@@ -95,7 +95,7 @@ class HashTable {
 
 public class Homework6 {
 	public static void main(String[] args) {
-		String[] words = new String[] { "tribunal", "aviator", "draft", "aroma", "draft", "costly", "700 kB", " aKp",
+		String[] words = new String[] { "tribunal", "aviator", "draft", "aroma", "Draft", "costly", "700 kB", " aKp",
 				"skimpy", "Amd", "WGLpX5i", "pi34EhMJ", "hair", "castic", "running", "screen", "13Y8g", "clinic",
 				"dandruff", "NOJhj8", "ninja" };
 		HashTable table = new HashTable();
